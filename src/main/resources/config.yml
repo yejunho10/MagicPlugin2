@@ -1,0 +1,52 @@
+maps:
+  map1: {}
+  map2: {}
+  map3: {}
+  home: {}
+  ticket: {}
+worlds:
+  spawn:
+    world: world
+    x: 0
+    y: 0
+    z: 0
+  lobby:
+    world: world
+    x: 0
+    y: 0
+    z: 0
+  surv1:
+    world: world
+    x: 0
+    y: 0
+    z: 0
+  surv2:
+    world: world
+    x: 0
+    y: 0
+    z: 0
+  surv3:
+    world: world
+    x: 0
+    y: 0
+    z: 0
+  casino:
+    world: world
+    x: 0
+    y: 0
+    z: 0
+  minigame1:
+    world: world
+    x: 0
+    y: 0
+    z: 0
+  zb:
+    world: world
+    x: 0
+    y: 0
+    z: 0
+  zw:
+    world: world
+    x: 0
+    y: 0
+    z: 0

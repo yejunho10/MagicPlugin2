@@ -1,0 +1,52 @@
+name: MagicPlugin
+main: yejunho10.magicplugin.GUIPlugin
+version: '${version}'
+description: This Plugin is For Feather Server. ALL RIGHTS RESERVED.
+auther: [yejunho10, 7oo7oo]
+website: http://feather-s.kr/
+api-version: 1.18
+
+commands:
+  mp:
+    description: 해당 플러그인의 주된 명령어입니다.
+  menu:
+    description: GUI를 표시합니다.
+  tk:
+    description: 티켓 명령어입니다.
+  party:
+    description: 파티 명령어입니다.
+  sethome:
+    description: 집 정보를 지정합니다.
+  home:
+    description: 지정되어있는 집으로 텔레포트합니다.
+  rules:
+    description: 규칙을 출력합니다. (제작중)
+  mpr:
+    description: 플러그인의 설정 파일을 불러옵니다.
+  mps:
+    description: 플러그인의 설정 파일을 저장합니다.
+  spawn:
+    description: 스폰으로 이동합니다.
+permissions:
+  myplugin.about:
+    description: myplugin 정보 확인 권한입니다.
+    default: true
+  myplugin.teleport:
+    description: myplugin(teleport) 전체 기능 이용 권한입니다.
+    default: true
+    children:
+      myplugin.teleport.survival:
+        description: myplugin의 survival로 teleport하는 기능 이용 권한입니다.
+        default: true
+      myplugin.teleport.casino:
+        description: myplugin의 casino로 teleport하는 기능 이용 권한입니다.
+        default: true
+      myplugin.teleport.lobby:
+        description: myplugin의 lobby로 teleport하는 기능 이용 권한입니다.
+        default: true
+      myplugin.teleport.spawn:
+        description: myplugin의 spawn으로 teleport하는 기능 이용 권한입니다.
+        default: true
+      myplugin.teleport.minigame1:
+        description: myplugin의 minigame1로 teleport하는 기능 이용 권한입니다
+        default: true
