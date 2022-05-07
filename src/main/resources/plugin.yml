@@ -2,7 +2,7 @@ name: MagicPlugin
 main: yejunho10.magicplugin.GUIPlugin
 version: '${version}'
 description: This Plugin is For Feather Server. ALL RIGHTS RESERVED.
-auther: [yejunho10, 7oo7oo]
+auther: ["yejunho10", "7oo7oo"]
 website: http://feather-s.kr/
 api-version: 1.18
 
