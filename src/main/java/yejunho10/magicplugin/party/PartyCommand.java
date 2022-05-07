@@ -138,6 +138,7 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
             case "kick":
                 if (args.length < 2) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "추방할 플레이어를 입력해주세요.");
+                    return false;
                 } //추방할 플레이어 입력 X
                 if (!pp.hasParty()) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "가입된 파티가 없습니다.");
@@ -207,6 +208,25 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 inviteMap.remove(p.getName());
                 p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "초대를 거절했습니다.");
                 break;
+            case "tp":
+                if (args.length < 2) {
+                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "텔레포트할 플레이어를 입력해주세요.");
+                    return false;
+                } //텔레포트할 플레이어 입력 X
+                target = Bukkit.getPlayer(args[1]);
+                if (target == null) {
+                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "텔레포트할 플레이어가 존재하지 않습니다.");
+                    return false;
+                } //타겟이 존재하지 않음/온라인이 아님
+                pptarget = PartyPlayer.getPartyPlayer(target);
+                if (!pptarget.hasParty() || pptarget.getPartyId() != pp.getPartyId()) {
+                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "해당 플레이어는 이 파티에 속해있지 않습니다.");
+                    return false;
+                } //타겟이 이 파티에 속하지 않음
+
+                p.teleport(target.getLocation());
+                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "성공적으로 텔레포트 되었습니다!");
+                break;
             case "help":
                 p.sendMessage(ChatColor.YELLOW + "========== " + ChatColor.LIGHT_PURPLE + "/party 명령어 도움말" + ChatColor.YELLOW + " ==========");
                 p.sendMessage(ChatColor.YELLOW + "/party create : 파티를 생성합니다.");
@@ -219,7 +239,7 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 p.sendMessage(ChatColor.YELLOW + "/party deny : 초대를 거절합니다.");
                 break;
         }
-        return false;
+        return true;
     }
 
     @Override

@@ -12,7 +12,6 @@ public class Teleport {
     public static Map<UUID, Location> map2 = new HashMap<>();
     public static Map<UUID, Location> map3 = new HashMap<>();
     public static Map<String, Location> loc = new HashMap<>();
-
     public static Map<UUID, Location> home = new HashMap<>();
     
 

@@ -27,12 +27,10 @@ public class NPCManager {
         Player npcPlayer = npc.getBukkitEntity().getPlayer();
         npcPlayer.setPlayerListName("");
 
-        npc.a(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+        npc.b(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 
         PlayerConnection connection = ((CraftPlayer) player).getHandle().b;
-        /*
-        connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, npc));
-        connection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
-        */
+        connection.a(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, npc));
+        connection.a(new PacketPlayOutNamedEntitySpawn(npc));
     }
 }
