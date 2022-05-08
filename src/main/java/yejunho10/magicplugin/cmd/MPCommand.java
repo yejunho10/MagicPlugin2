@@ -227,24 +227,23 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                         Bukkit.broadcastMessage(ChatColor.RED + "### 테러 대응모드가 꺼졌습니다. ###");
                         return true;
                     }
-
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 잘못되었습니다.");
-                    return false;
                 }
                 no_ops((Player) sender);
                 return false;
         } //mp terror <on|off>
         else if (args[0].equalsIgnoreCase("help")) {
             if (args.length > 1) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
-                    return false;
-                }
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                return false;
+            }
 
             sender.sendMessage(ChatColor.YELLOW + "========== " + ChatColor.LIGHT_PURPLE + "/mp 명령어 도움말" + ChatColor.YELLOW + " ==========");
-            sender.sendMessage(ChatColor.RED + "/mp about : 플러그인의 정보를 출력합니다.");
-            sender.sendMessage(ChatColor.RED + "/mp tp <위치> : 지정된 위치로 텔레포트합니다.");
-            sender.sendMessage(ChatColor.RED + "/mp lobby : 로비로 텔레포트합니다.");
+            sender.sendMessage(ChatColor.YELLOW + "/mp about : 플러그인의 정보를 출력합니다.");
+            sender.sendMessage(ChatColor.YELLOW + "/mp tp <위치> : 지정된 위치로 텔레포트합니다.");
+            sender.sendMessage(ChatColor.YELLOW + "/mp lobby : 로비로 텔레포트합니다.");
+            return true;
         } //mp help
+        sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "사용법이 잘못되었습니다. /mp help를 참고하세요.");
         return false;
     }
 
