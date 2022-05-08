@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import yejunho10.magicplugin.cmd.*;
 import yejunho10.magicplugin.event.Event;
+import yejunho10.magicplugin.func.Functions;
 import yejunho10.magicplugin.gui.ItemInventory;
 import yejunho10.magicplugin.npc.FPCommand;
 import yejunho10.magicplugin.npc.NPCManager;
@@ -21,8 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static yejunho10.magicplugin.func.Functions.*;
 
 @SuppressWarnings("all")
 public class GUIPlugin extends JavaPlugin implements CommandExecutor {
@@ -39,17 +38,28 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
     public void onEnable() {
         getLogger().info("[플러그인이 활성화됩니다]");
 
+        getServer().getPluginManager().registerEvents(new Event(), GUIPlugin.getInstance());
+        getServer().getPluginManager().registerEvents(new ItemInventory(), GUIPlugin.getInstance());
+        getCommand("mp").setExecutor(new MPCommand());
+        getCommand("rules").setExecutor(new Rules());
+        getCommand("menu").setExecutor(new ItemCommands());
+        getCommand("sethome").setExecutor(new SetHome());
+        getCommand("home").setExecutor(new Home());
+        getCommand("tk").setExecutor(new Ticket());
+        getCommand("party").setExecutor(new PartyCommand());
+        getCommand("fp").setExecutor(new FPCommand());
+
         instance = this;
         npcManager = new NPCManager();
 
         timerForAnnouncement.schedule(new TimerTask() {
             @Override
             public void run() {
-                sendAnnoucement();
+                Functions.sendAnnoucement();
             }
         }, 5000, 120000);
 
-        restoreMaps();
+        Functions.restoreMaps();
     }
 
     @Override
@@ -58,7 +68,7 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
 
         timerForAnnouncement.cancel();
 
-        saveMaps();
+        Functions.saveMaps();
     }
 
     public static GUIPlugin getInstance() {
@@ -69,7 +79,7 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("mpr")) {
             if (sender.isOp()) {
-                restoreMaps();
+                Functions.restoreMaps();
                 sender.sendMessage(ChatColor.GREEN + "[콘피그 파일 불러오기 완료]");
             } else {
                 sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "이 기능은 OP 권한만 사용가능합니다.");
@@ -77,7 +87,7 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
         }
         else if (label.equalsIgnoreCase("mps")) {
             if (sender.isOp()) {
-                saveMaps();
+                Functions.saveMaps();
                 sender.sendMessage(ChatColor.GREEN + "[콘피그 파일 저장 완료]");
             } else {
                 sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "이 기능은 OP 권한만 사용가능합니다.");
