@@ -34,20 +34,22 @@ public class MPCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "사용법이 잘못되었습니다. /mp help를 참고하세요.");
+            return false;
         } //mp
         else if (args[0].equalsIgnoreCase("about")) {
             if (sender.hasPermission("myplugin.about")) {
-                if (args.length > 1) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
-                    return false;
-                }
-
-                sender.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "이 기능은 GUI메뉴의 커맨드 기능입니다.");
-                sender.sendMessage(ChatColor.YELLOW + "[문의] - " + ChatColor.WHITE + "디스코드 | 호예준#3840");
-                return true;
+                no_permissions((Player) sender, "myplugin.about");
+                return false;
             }
-            no_permissions((Player) sender, "myplugin.about");
-            return false;
+
+            if (args.length > 1) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                return false;
+            }
+
+            sender.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "이 기능은 GUI메뉴의 커맨드 기능입니다.");
+            sender.sendMessage(ChatColor.YELLOW + "[문의] - " + ChatColor.WHITE + "디스코드 | 호예준#3840");
+            return true;
         } //mp about
         else if (args[0].equalsIgnoreCase("tp")) {
             if (!(sender instanceof Player)) {
@@ -56,158 +58,182 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             } //콘솔등에서 입력시
             Player p = (Player) sender;
 
-            if (p.hasPermission("myplugin.teleport")) {
-                if (args.length < 2) {
+            if (!p.hasPermission("myplugin.teleport")) {
+                no_permissions(p, "myplugin.teleport");
+                return false;
+            }
+
+            if (args.length < 2) {
                     sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아큐먼트가 부족합니다.");
                     return false;
                 }
 
-                if (args[1].equalsIgnoreCase("zb")) {
+            if (args[1].equalsIgnoreCase("zb")) {
+                    if (p.isOp()) {
+                        no_ops(p);
+                        return false;
+                    }
+
                     if (args.length < 3) {
                         sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "반성의 방으로 텔레포트할 플레이어를 입력해주세요.");
                         return false;
                     }
 
-                    if (p.isOp()) {
-                        Location Dest_zb = new Location(loc.get("zb").getWorld(), loc.get("zb").getX(), loc.get("zb").getY(), loc.get("zb").getZ()); //ZB
-                        Player target = Bukkit.getPlayer(args[2]);
+                    Location Dest_zb = new Location(loc.get("zb").getWorld(), loc.get("zb").getX(), loc.get("zb").getY(), loc.get("zb").getZ()); //ZB
 
-                        if (target == null) {
-                            sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력한 플레이어는 온라인 상태가 아닙니다.");
-                            return false;
-                        }
-
-                        target.teleport(Dest_zb);
-                        sender.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "반성의 방으로 성공적으로 텔레포트 하였습니다!");
-                        target.setOp(false);
-                        return true;
+                    Player target = Bukkit.getPlayer(args[2]);
+                    if (target == null) {
+                        sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력한 플레이어는 온라인 상태가 아닙니다.");
+                        return false;
                     }
-                    no_ops(p);
-                    return false;
+
+                    target.teleport(Dest_zb);
+                    sender.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "반성의 방으로 성공적으로 텔레포트 하였습니다!");
+                    target.setOp(false);
+                    return true;
                 }
 
-                if (args.length > 2) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
-                }
-                switch (args[1]) {
-                    case "survival1" -> Teleport.teleportSurvival1(p);
-                    case "survival2" -> Teleport.teleportSurvival2(p);
-                    case "survival3" -> Teleport.teleportSurvival3(p);
-                    case "lobby" -> Teleport.teleportLobby(p);
-                    case "spawn" -> Teleport.teleportSpawn(p);
-                    case "casino" -> Teleport.teleportCasino(p);
-                    case "minigame1" -> Teleport.teleportMinigame1(p);
-                    case "zw" -> {
-                        if (p.isOp()) {
-                            Location Dest_zw = new Location(loc.get("zw").getWorld(), loc.get("zw").getX(), loc.get("zw").getY(), loc.get("zw").getZ()); //ZW
-                            p.teleport(Dest_zw);
-                            sender.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "성공적으로 텔레포트 되었습니다!");
-                            return true;
-                        }
+            if (args.length > 2) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+            }
+            switch (args[1]) {
+                case "survival1" -> Teleport.teleportSurvival1(p);
+                case "survival2" -> Teleport.teleportSurvival2(p);
+                case "survival3" -> Teleport.teleportSurvival3(p);
+                case "lobby" -> Teleport.teleportLobby(p);
+                case "spawn" -> Teleport.teleportSpawn(p);
+                case "casino" -> Teleport.teleportCasino(p);
+                case "minigame1" -> Teleport.teleportMinigame1(p);
+                case "zw" -> {
+                    if (p.isOp()) {
                         no_ops(p);
                         return false;
                     }
-                    default -> {
-                        sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "존재하지 않는 텔레포트입니다.");
-                        return false;
-                    }
+
+                    Location Dest_zw = new Location(loc.get("zw").getWorld(), loc.get("zw").getX(), loc.get("zw").getY(), loc.get("zw").getZ()); //ZW
+                    p.teleport(Dest_zw);
+                    sender.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "성공적으로 텔레포트 되었습니다!");
+                    return true;
                 }
-                return true;
+                default -> {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "존재하지 않는 텔레포트입니다.");
+                    return false;
+                }
             }
-            no_permissions(p, "myplugin.teleport");
-            return false;
-        } //mp tp
+            return true;
+        } //mp tp <위치> [플레이어(zb만 해당)]
         else if (args[0].equalsIgnoreCase("lobby")) {
+            if (args.length > 1) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                return false;
+            }
+
             if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "해당 명령어는 플레이어만 사용 가능합니다.");
                 return false;
             } //콘솔등에서 입력시
-            Teleport.teleportLobby((Player) sender);
+            Player p = (Player) sender;
+
+            if (!p.hasPermission("myplugin.teleport.lobby")) {
+                no_permissions(p, "myplugin.teleport.lobby");
+                return false;
+            }
+
+            Teleport.teleportLobby(p);
             return true;
         } //mp lobby
         else if (args[0].equalsIgnoreCase("reload")) {
-            if (sender.isOp()) {
-                if (args.length > 2) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
-                    return false;
-                }
-                else if (args.length < 2) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아큐먼트가 부족합니다.");
-                    return false;
-                }
+            if (!sender.isOp()) {
+                no_ops((Player) sender);
+                return false;
+            }
 
-                if (args[1].equalsIgnoreCase("server")) {
-                    Bukkit.broadcastMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "서버가 재로드됩니다! 안전한곳에서 움직이지 말아주세요.");
-                    Bukkit.reload();
-                    return true;
-                }
-                else if (args[1].equalsIgnoreCase("config")) {
-                    sender.sendMessage(ChatColor.GREEN + "[설정 재로드] - 저장 시작");
-                    saveMaps();
-                    sender.sendMessage(ChatColor.GREEN + "[설정 재로드] - 저장 완료");
-                    sender.sendMessage(ChatColor.GREEN + "[설정 재로드] - 불러오기 시작");
-                    restoreMaps();
-                    sender.sendMessage(ChatColor.GREEN + "[설정 재로드] - 불러오기 완료");
-                    return true;
-                }
+            if (args.length > 2) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                return false;
+            }
+            else if (args.length < 2) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아큐먼트가 부족합니다.");
+                return false;
+            }
 
+            if (args[1].equalsIgnoreCase("server")) {
+                Bukkit.broadcastMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "서버가 재로드됩니다! 안전한곳에서 움직이지 말아주세요.");
+                Bukkit.reload();
+                return true;
+            }
+            else if (args[1].equalsIgnoreCase("config")) {
+                sender.sendMessage(ChatColor.GREEN + "[설정 재로드] - 저장 시작");
+                saveMaps();
+                sender.sendMessage(ChatColor.GREEN + "[설정 재로드] - 저장 완료");
+
+                sender.sendMessage(ChatColor.GREEN + "[설정 재로드] - 불러오기 시작");
+                restoreMaps();
+                sender.sendMessage(ChatColor.GREEN + "[설정 재로드] - 불러오기 완료");
+                return true;
+            }
+            else {
                 sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 잘못되었습니다.");
                 return false;
             }
-            no_ops((Player) sender);
-            return false;
         } //mp reload <server|config>
         else if (args[0].equalsIgnoreCase("reset")) {
-            if (sender.isOp()) {
-                if (args.length > 1) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
-                    return false;
-                }
-
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (!player.isOp()) {
-                        switch (player.getWorld().getName()) {
-                            case "world", "casino", "co_01", "minigame1" -> resetMessage(player, GameMode.ADVENTURE);
-                            case "surv1", "surv2", "surv3", "surv1_nehter", "surv2_nehter", "surv3_nehter", "world_the_end" -> resetMessage(player, GameMode.SURVIVAL);
-                            default -> player.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.GREEN + player.getName() + ChatColor.WHITE + "님은 현재, " + ChatColor.GREEN + player.getWorld().getName() + ChatColor.WHITE + "월드에 있으며, 해당월드는 인식되지 않았으므로 게임모드를 변경하지 못했음을 알려드립니다.");
-                        }
-                    } else {
-                        player.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.GREEN + player.getName() + ChatColor.WHITE + "님은 현재, " + ChatColor.GREEN + player.getWorld().getName() + ChatColor.WHITE + "월드에 있으며, OP권한이 있어 게임모드가 변경되지 않았음을 알려드립니다.");
-                    }
-                }
-                return true;
+            if (!sender.isOp()) {
+                no_ops((Player) sender);
+                return false;
             }
-            no_ops((Player) sender);
-            return false;
+
+            if (args.length > 1) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                return false;
+            }
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (!player.isOp()) {
+                    switch (player.getWorld().getName()) {
+                        case "world", "casino", "co_01", "minigame1" -> resetMessage(player, GameMode.ADVENTURE);
+                        case "surv1", "surv2", "surv3", "surv1_nehter", "surv2_nehter", "surv3_nehter", "world_the_end" -> resetMessage(player, GameMode.SURVIVAL);
+                        default -> player.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.GREEN + player.getName() + ChatColor.WHITE + "님은 현재, " + ChatColor.GREEN + player.getWorld().getName() + ChatColor.WHITE + "월드에 있으며, 해당월드는 인식되지 않았으므로 게임모드를 변경하지 못했음을 알려드립니다.");
+                    }
+                } else {
+                        player.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.GREEN + player.getName() + ChatColor.WHITE + "님은 현재, " + ChatColor.GREEN + player.getWorld().getName() + ChatColor.WHITE + "월드에 있으며, OP권한이 있어 게임모드가 변경되지 않았음을 알려드립니다.");
+                }
+            }
+            return true;
         } //mp reset
         else if (args[0].equalsIgnoreCase("stop")) {
-            if (sender.isOp()) {
-                if (args.length < 1) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
-                    return false;
-                }
-
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.kickPlayer("서버가 종료됩니다.");
-                }
-                Bukkit.shutdown();
-                return true;
+            if (!sender.isOp()) {
+                no_ops((Player) sender);
+                return false;
             }
-            no_ops((Player) sender);
-            return false;
+
+            if (args.length < 1) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                return false;
+            }
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.kickPlayer("서버가 종료됩니다.");
+            }
+            Bukkit.shutdown();
+            return true;
         } //mp stop
         else if (args[0].equalsIgnoreCase("terror")) {
-                if (sender.isOp()) {
-                    if (args.length < 2) {
-                        sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
-                        return false;
-                    }
-                    else if (args.length > 2) {
-                        sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아큐먼트가 부족합니다.");
-                        return false;
-                    }
+            if (!sender.isOp()) {
+                no_ops((Player) sender);
+                return false;
+            }
 
-                    if (args[1].equalsIgnoreCase("on")) {
+            if (args.length < 2) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                return false;
+            }
+            else if (args.length > 2) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아큐먼트가 부족합니다.");
+                return false;
+            }
+
+            if (args[1].equalsIgnoreCase("on")) {
                         if (terror) {
                             sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드가 이미 켜져있습니다.");
                             return false;
@@ -217,7 +243,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                         Bukkit.broadcastMessage(ChatColor.RED + "### 테러 대응모드가 켜졌습니다. ###");
                         return true;
                     }
-                    else if (args[1].equalsIgnoreCase("off")) {
+            else if (args[1].equalsIgnoreCase("off")) {
                         if (!terror) {
                             sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드가 이미 꺼져있습니다.");
                             return false;
@@ -227,9 +253,10 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                         Bukkit.broadcastMessage(ChatColor.RED + "### 테러 대응모드가 꺼졌습니다. ###");
                         return true;
                     }
-                }
-                no_ops((Player) sender);
-                return false;
+            else {
+                        sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "올바른 아규먼트가 아닙니다.");
+                        return false;
+                    }
         } //mp terror <on|off>
         else if (args[0].equalsIgnoreCase("help")) {
             if (args.length > 1) {
