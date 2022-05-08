@@ -2,6 +2,7 @@ package yejunho10.magicplugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,6 +20,7 @@ import yejunho10.magicplugin.tpa.tpaccept;
 import yejunho10.magicplugin.tpa.tpadeny;
 import yejunho10.magicplugin.tpa.tpahere;
 import yejunho10.magicplugin.tpa.tpask;
+import yejunho10.magicplugin.etc.tpaData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,8 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
     public static Map<String, PartyPlayer> ppMap = new HashMap<>();
     public static Map<Integer, Party> partyMap = new HashMap<>();
     public static Map<String, Integer> inviteMap = new HashMap<>();
+
+    public static Map<Player, tpaData> tpaMap = new HashMap<>();
 
     Timer timerForAnnouncement = new Timer();
 
@@ -159,3 +163,4 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
         return false;
     }
 }
+
