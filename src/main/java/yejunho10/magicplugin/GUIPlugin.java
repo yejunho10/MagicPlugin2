@@ -38,8 +38,8 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
     public void onEnable() {
         getLogger().info("[플러그인이 활성화됩니다]");
 
-        getServer().getPluginManager().registerEvents(new Event(), GUIPlugin.getInstance());
-        getServer().getPluginManager().registerEvents(new ItemInventory(), GUIPlugin.getInstance());
+        getServer().getPluginManager().registerEvents(new Event(), this);
+        getServer().getPluginManager().registerEvents(new ItemInventory(), this);
         getCommand("mp").setExecutor(new MPCommand());
         getCommand("rules").setExecutor(new Rules());
         getCommand("menu").setExecutor(new ItemCommands());
