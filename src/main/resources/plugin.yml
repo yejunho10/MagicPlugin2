@@ -13,6 +13,8 @@ commands:
     description: GUI를 표시합니다.
   tk:
     description: 티켓 명령어입니다.
+  fp:
+    description: npc 명령어입니다.
   party:
     description: 파티 명령어입니다.
   sethome:

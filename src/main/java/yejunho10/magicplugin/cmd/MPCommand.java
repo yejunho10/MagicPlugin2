@@ -250,9 +250,6 @@ public class MPCommand implements CommandExecutor, TabCompleter {
 
     @Nullable
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 0) {
-            return sender.isOp() ? Arrays.asList("about", "tp", "lobby", "reload", "reset", "stop", "terror", "help") : Arrays.asList("about", "tp", "lobby", "help");
-        }
         if (args[0].equalsIgnoreCase("tp")) {
             return sender.isOp() ? Arrays.asList("spawn", "lobby", "casino", "minigame1", "survival1", "survival2", "survival3", "zw", "zb") : Arrays.asList("spawn", "lobby", "casino", "minigame1", "survival1", "survival2", "survival3");
         }
@@ -262,7 +259,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
         else if (args[0].equalsIgnoreCase("reload")) {
             return sender.isOp() ? Arrays.asList("server", "config") : List.of("");
         }
-        return List.of("");
+        return sender.isOp() ? Arrays.asList("about", "tp", "lobby", "reload", "reset", "stop", "terror", "help") : Arrays.asList("about", "tp", "lobby", "help");
     }
 
     private void resetMessage(Player p, GameMode gm) {
