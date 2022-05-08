@@ -12,11 +12,13 @@ import yejunho10.magicplugin.cmd.*;
 import yejunho10.magicplugin.event.Event;
 import yejunho10.magicplugin.func.Functions;
 import yejunho10.magicplugin.gui.ItemInventory;
-import yejunho10.magicplugin.npc.FPCommand;
-import yejunho10.magicplugin.npc.NPCManager;
 import yejunho10.magicplugin.party.Party;
 import yejunho10.magicplugin.party.PartyCommand;
 import yejunho10.magicplugin.party.PartyPlayer;
+import yejunho10.magicplugin.tpa.tpaccept;
+import yejunho10.magicplugin.tpa.tpadeny;
+import yejunho10.magicplugin.tpa.tpahere;
+import yejunho10.magicplugin.tpa.tpask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +28,6 @@ import java.util.TimerTask;
 @SuppressWarnings("all")
 public class GUIPlugin extends JavaPlugin implements CommandExecutor {
     private static GUIPlugin instance;
-    public NPCManager npcManager;
-
     public static Map<String, PartyPlayer> ppMap = new HashMap<>();
     public static Map<Integer, Party> partyMap = new HashMap<>();
     public static Map<String, Integer> inviteMap = new HashMap<>();
@@ -47,10 +47,13 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
         getCommand("home").setExecutor(new Home());
         getCommand("tk").setExecutor(new Ticket());
         getCommand("party").setExecutor(new PartyCommand());
-        getCommand("fp").setExecutor(new FPCommand());
+
+        getCommand("tpask").setExecutor(new tpask());
+        getCommand("tpahere").setExecutor(new tpahere());
+        getCommand("tpaccept").setExecutor(new tpaccept());
+        getCommand("tpdeny").setExecutor(new tpadeny());
 
         instance = this;
-        npcManager = new NPCManager();
 
         timerForAnnouncement.schedule(new TimerTask() {
             @Override

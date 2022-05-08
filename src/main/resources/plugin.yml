@@ -3,6 +3,8 @@ main: yejunho10.magicplugin.GUIPlugin
 version: '${version}'
 description: This Plugin is For Feather Server. ALL RIGHTS RESERVED.
 auther: ["yejunho10", "7oo7oo"]
+softdepend:
+  - Multiverse-Core
 website: http://feather-s.kr/
 api-version: 1.18
 
@@ -13,8 +15,6 @@ commands:
     description: GUI를 표시합니다.
   tk:
     description: 티켓 명령어입니다.
-  fp:
-    description: npc 명령어입니다.
   party:
     description: 파티 명령어입니다.
   sethome:
@@ -29,6 +29,14 @@ commands:
     description: 플러그인의 설정 파일을 저장합니다.
   spawn:
     description: 스폰으로 이동합니다.
+  tpask:
+    description: 해당 플레이어에게 tp를 요청합니다.
+  tpahere:
+    description: 해당 플레이어에게 이곳으로 tp를 요청합니다.
+  tpaccept:
+    description: tp 요청을 수락합니다.
+  tpadeny:
+    description: tp 요청을 거절합니다.
 permissions:
   myplugin.about:
     description: myplugin 정보 확인 권한입니다.
