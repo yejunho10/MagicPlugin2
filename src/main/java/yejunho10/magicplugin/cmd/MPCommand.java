@@ -234,29 +234,29 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args[1].equalsIgnoreCase("on")) {
-                        if (terror) {
-                            sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드가 이미 켜져있습니다.");
-                            return false;
-                        }
-                        terror = true;
-                        sender.sendMessage(ChatColor.GREEN + "테러 대응모드를 켰습니다.");
-                        Bukkit.broadcastMessage(ChatColor.RED + "### 테러 대응모드가 켜졌습니다. ###");
-                        return true;
-                    }
+                if (terror) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드가 이미 켜져있습니다.");
+                    return false;
+                }
+                terror = true;
+                sender.sendMessage(ChatColor.GREEN + "테러 대응모드를 켰습니다.");
+                Bukkit.broadcastMessage(ChatColor.RED + "### 테러 대응모드가 켜졌습니다. ###");
+                return true;
+            }
             else if (args[1].equalsIgnoreCase("off")) {
-                        if (!terror) {
-                            sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드가 이미 꺼져있습니다.");
-                            return false;
-                        }
-                        terror = false;
-                        sender.sendMessage(ChatColor.GREEN + "테러 대응모드를 껐습니다.");
-                        Bukkit.broadcastMessage(ChatColor.RED + "### 테러 대응모드가 꺼졌습니다. ###");
-                        return true;
-                    }
+                if (!terror) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드가 이미 꺼져있습니다.");
+                    return false;
+                }
+                terror = false;
+                sender.sendMessage(ChatColor.GREEN + "테러 대응모드를 껐습니다.");
+                Bukkit.broadcastMessage(ChatColor.RED + "### 테러 대응모드가 꺼졌습니다. ###");
+                return true;
+            }
             else {
-                        sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "올바른 아규먼트가 아닙니다.");
-                        return false;
-                    }
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "올바른 아규먼트가 아닙니다.");
+                return false;
+            }
         } //mp terror <on|off>
         else if (args[0].equalsIgnoreCase("help")) {
             if (args.length > 1) {
