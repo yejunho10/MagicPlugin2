@@ -37,7 +37,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             return false;
         } //mp
         else if (args[0].equalsIgnoreCase("about")) {
-            if (sender.hasPermission("myplugin.about")) {
+            if (!sender.hasPermission("myplugin.about")) {
                 no_permissions((Player) sender, "myplugin.about");
                 return false;
             }

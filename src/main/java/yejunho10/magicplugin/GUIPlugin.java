@@ -2,7 +2,6 @@ package yejunho10.magicplugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import yejunho10.magicplugin.cmd.*;
 import yejunho10.magicplugin.event.Event;
-import yejunho10.magicplugin.func.Functions;
 import yejunho10.magicplugin.gui.ItemInventory;
 import yejunho10.magicplugin.party.Party;
 import yejunho10.magicplugin.party.PartyCommand;
@@ -26,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static yejunho10.magicplugin.func.Functions.*;
 
 @SuppressWarnings("all")
 public class GUIPlugin extends JavaPlugin implements CommandExecutor {
@@ -62,11 +62,11 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
         timerForAnnouncement.schedule(new TimerTask() {
             @Override
             public void run() {
-                Functions.sendAnnoucement();
+                sendAnnoucement();
             }
         }, 5000, 120000);
 
-        Functions.restoreMaps();
+        restoreMaps();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
 
         timerForAnnouncement.cancel();
 
-        Functions.saveMaps();
+        saveMaps();
     }
 
     public static GUIPlugin getInstance() {
@@ -86,7 +86,7 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("mpr")) {
             if (sender.isOp()) {
-                Functions.restoreMaps();
+                restoreMaps();
                 sender.sendMessage(ChatColor.GREEN + "[콘피그 파일 불러오기 완료]");
             } else {
                 sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "이 기능은 OP 권한만 사용가능합니다.");
@@ -94,7 +94,7 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
         }
         else if (label.equalsIgnoreCase("mps")) {
             if (sender.isOp()) {
-                Functions.saveMaps();
+                saveMaps();
                 sender.sendMessage(ChatColor.GREEN + "[콘피그 파일 저장 완료]");
             } else {
                 sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "이 기능은 OP 권한만 사용가능합니다.");

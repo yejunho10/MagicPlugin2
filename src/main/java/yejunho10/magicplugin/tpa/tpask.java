@@ -72,6 +72,14 @@ public class tpask implements CommandExecutor {
         target.sendMessage("요청을 수락하려면 /tpaccept를, 요청을 거절하려면 /tpadeny를 사용해주세요.");
         target.sendMessage("15초 뒤에 신청이 초기화됩니다.");
 
+        //임시다!
+        tpaData a = tpaMap.get(target);
+        p.sendMessage("요청자 : " + a.getSender() +
+                "\n타겟 : " + a.getTarget().getName() +
+                "\n위치 : " + a.getLocation().getWorld().getName() + ", " + a.getLocation().getX() + ", " + a.getLocation().getY() + ", " + a.getLocation().getZ());
+        target.sendMessage("요청자 : " + a.getSender() +
+                "\n타겟 : " + a.getTarget().getName() +
+                "\n위치 : " + a.getLocation().getWorld().getName() + ", " + a.getLocation().getX() + ", " + a.getLocation().getY() + ", " + a.getLocation().getZ());
         return false;
     }
 }
@@ -83,8 +91,7 @@ new BukkitRunnable() {
             코드 내용!
         }
 }.runTaskLaterAsynchronously(GUIPlugin.getInstance(), 20 * 15);
+= 15초후에 실행한다.
 
-
--> 15초후에 실행한다. <-
--> tpa 신청 내역 삭제에 이용된다 <-
+-> Asynchronously = 비동기 였나 <-
 */
