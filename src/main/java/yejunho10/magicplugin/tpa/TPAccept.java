@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import static yejunho10.magicplugin.GUIPlugin.tpaMap;
 
 @SuppressWarnings("all")
-public class tpaccept implements CommandExecutor {
+public class TPAccept implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {

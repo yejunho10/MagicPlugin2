@@ -3,22 +3,19 @@ package yejunho10.magicplugin.func;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import yejunho10.magicplugin.GUIPlugin;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import static org.bukkit.Bukkit.getLogger;
 import static yejunho10.magicplugin.cmd.Ticket.ticket;
 import static yejunho10.magicplugin.func.Teleport.*;
 import static yejunho10.magicplugin.func.Teleport.loc;
 
+@SuppressWarnings("all")
 public class Functions {
     private static final GUIPlugin plugin = GUIPlugin.getInstance();
-    private static FileConfiguration config = plugin.getConfig();
     private static int i;
 
     public static void sendAnnoucement() {
@@ -43,7 +40,7 @@ public class Functions {
             if (!(map1.size() == 0)) {
                 getLogger().info("[map1 저장 시작]");
                 for (Map.Entry<UUID, Location> entry : map1.entrySet()) {
-                    config.set("maps.map1." + entry.getKey(), entry.getValue());
+                    plugin.getConfig().set("maps.map1." + entry.getKey(), entry.getValue());
                     getLogger().info("[map1 저장중 : " + entry.getKey() + "]");
                 }
                 plugin.saveConfig();
@@ -62,7 +59,7 @@ public class Functions {
             if (!(map2.size() == 0)) {
                 getLogger().info("[map2 저장 시작]");
                 for (Map.Entry<UUID, Location> entry : map2.entrySet()) {
-                    config.set("maps.map2." + entry.getKey(), entry.getValue());
+                    plugin.getConfig().set("maps.map2." + entry.getKey(), entry.getValue());
                     getLogger().info("[map2 저장중 : " + entry.getKey() + "]");
                 }
                 plugin.saveConfig();
@@ -80,7 +77,7 @@ public class Functions {
             if (!(map2.size() == 0)) {
                 getLogger().info("[map3 저장 시작]");
                 for (Map.Entry<UUID, Location> entry : map3.entrySet()) {
-                    config.set("maps.map3." + entry.getKey(), entry.getValue());
+                    plugin.getConfig().set("maps.map3." + entry.getKey(), entry.getValue());
                     getLogger().info("[map3 저장중 : " + entry.getKey() + "]");
                 }
                 plugin.saveConfig();
@@ -98,7 +95,7 @@ public class Functions {
             if (!(home.size() == 0)) {
                 getLogger().info("[home 저장 시작]");
                 for (Map.Entry<UUID, Location> entry : home.entrySet()) {
-                    config.set("maps.home." + entry.getKey(), entry.getValue());
+                    plugin.getConfig().set("maps.home." + entry.getKey(), entry.getValue());
                     getLogger().info("[home 저장중 : " + entry.getKey() + "]");
                 }
                 plugin.saveConfig();
@@ -117,11 +114,11 @@ public class Functions {
                 getLogger().info("[ticket 저장 시작]");
                 for (Map.Entry<UUID, Integer> entry : ticket.entrySet()) {
                     if (entry.getValue() == 0) {
-                        if (config.contains("maps.ticket." + entry.getKey())) {
-                            config.set("maps.ticket." + entry.getKey(), null);
+                        if (plugin.getConfig().contains("maps.ticket." + entry.getKey())) {
+                            plugin.getConfig().set("maps.ticket." + entry.getKey(), null);
                         }
                     } else {
-                        config.set("maps.ticket." + entry.getKey(), entry.getValue());
+                        plugin.getConfig().set("maps.ticket." + entry.getKey(), entry.getValue());
                         getLogger().info("[ticket 저장중 : " + entry.getKey() + "]");
                     }
                 }
@@ -146,8 +143,8 @@ public class Functions {
     public static void restoreMaps() {
         try {
             getLogger().info("[map1 불러오기 시작]");
-            config.getConfigurationSection("maps.map1").getKeys(false).forEach(key -> {
-                Location content = config.getLocation("maps.map1." + key);
+            plugin.getConfig().getConfigurationSection("maps.map1").getKeys(false).forEach(key -> {
+                Location content = plugin.getConfig().getLocation("maps.map1." + key);
                 getLogger().info("[map1 불러오기 : " + key + "]");
                 map1.put(UUID.fromString(key), content);
             });
@@ -160,8 +157,8 @@ public class Functions {
 
         try {
             getLogger().info("[map2 불러오기 시작]");
-            config.getConfigurationSection("maps.map2").getKeys(false).forEach(key -> {
-                Location content = config.getLocation("maps.map2." + key);
+            plugin.getConfig().getConfigurationSection("maps.map2").getKeys(false).forEach(key -> {
+                Location content = plugin.getConfig().getLocation("maps.map2." + key);
                 getLogger().info("[map2 불러오기 : " + key + "]");
                 map2.put(UUID.fromString(key), content);
             });
@@ -174,8 +171,8 @@ public class Functions {
 
         try {
             getLogger().info("[map3 불러오기 시작]");
-            config.getConfigurationSection("maps.map3").getKeys(false).forEach(key -> {
-                Location content = ((Location) config.get("maps.map3." + key));
+            plugin.getConfig().getConfigurationSection("maps.map3").getKeys(false).forEach(key -> {
+                Location content = plugin.getConfig().getLocation("maps.map3." + key);
                 getLogger().info("[map3 불러오기 : " + key + "]");
                 map3.put(UUID.fromString(key), content);
             });
@@ -188,8 +185,8 @@ public class Functions {
 
         try {
             getLogger().info("[home 불러오기 시작]");
-            config.getConfigurationSection("maps.home").getKeys(false).forEach(key -> {
-                Location content = config.getLocation("maps.home." + key);
+            plugin.getConfig().getConfigurationSection("maps.home").getKeys(false).forEach(key -> {
+                Location content = plugin.getConfig().getLocation("maps.home." + key);
                 getLogger().info("[home 불러오기 : " + key + "]");
                 home.put(UUID.fromString(key), content);
             });
@@ -200,12 +197,12 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("maps.ticket").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("maps.ticket").getKeys(false).isEmpty()) {
             getLogger().info("[ticket 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[ticket 불러오기 시작]");
-            config.getConfigurationSection("maps.ticket").getKeys(false).forEach(key -> {
-                int content = config.getInt("maps.ticket." + key);
+            plugin.getConfig().getConfigurationSection("maps.ticket").getKeys(false).forEach(key -> {
+                int content = plugin.getConfig().getInt("maps.ticket." + key);
                 if (!(content == 0)) {
                     ticket.put(UUID.fromString(key), content);
                     getLogger().info("[ticket 불러오기 : " + key + "]");
@@ -215,14 +212,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.spawn").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.spawn").getKeys(false).isEmpty()) {
             getLogger().info("[spawn 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[spawn 불러오기 시작]");
-            String world = config.getString("worlds.spawn.world");
-            int x = config.getInt("worlds.spawn.x");
-            int y = config.getInt("worlds.spawn.y");
-            int z = config.getInt("worlds.spawn.z");
+            String world = plugin.getConfig().getString("worlds.spawn.world");
+            int x = plugin.getConfig().getInt("worlds.spawn.x");
+            int y = plugin.getConfig().getInt("worlds.spawn.y");
+            int z = plugin.getConfig().getInt("worlds.spawn.z");
             Location loc_spawn = new Location(Bukkit.getServer().getWorld(world), x, y, z);
             loc.put("spawn", loc_spawn);
             getLogger().info("[spawn 불러오기 : " + loc_spawn + "]");
@@ -230,14 +227,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.lobby").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.lobby").getKeys(false).isEmpty()) {
             getLogger().info("[lobby 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[lobby 불러오기 시작]");
-            String world = config.getString("worlds.lobby.world");
-            int x = config.getInt("worlds.lobby.x");
-            int y = config.getInt("worlds.lobby.y");
-            int z = config.getInt("worlds.lobby.z");
+            String world = plugin.getConfig().getString("worlds.lobby.world");
+            int x = plugin.getConfig().getInt("worlds.lobby.x");
+            int y = plugin.getConfig().getInt("worlds.lobby.y");
+            int z = plugin.getConfig().getInt("worlds.lobby.z");
             Location loc_lobby = new Location(Bukkit.getServer().getWorld(world), x, y, z);
             loc.put("lobby", loc_lobby);
             getLogger().info("[lobby 불러오기 : " + loc_lobby + "]");
@@ -245,14 +242,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.surv1").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.surv1").getKeys(false).isEmpty()) {
             getLogger().info("[surv1 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[surv1 불러오기 시작]");
-            String world = config.getString("worlds.surv1.world");
-            int x = config.getInt("worlds.surv1.x");
-            int y = config.getInt("worlds.surv1.y");
-            int z = config.getInt("worlds.surv1.z");
+            String world = plugin.getConfig().getString("worlds.surv1.world");
+            int x = plugin.getConfig().getInt("worlds.surv1.x");
+            int y = plugin.getConfig().getInt("worlds.surv1.y");
+            int z = plugin.getConfig().getInt("worlds.surv1.z");
             Location loc_surv1 = new Location(Bukkit.getServer().getWorld(world), x, y, z);
             loc.put("surv1", loc_surv1);
             getLogger().info("[surv1 불러오기 : " + loc_surv1 + "]");
@@ -260,14 +257,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.surv2").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.surv2").getKeys(false).isEmpty()) {
             getLogger().info("[surv2 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[surv2 불러오기 시작]");
-            String world = config.getString("worlds.surv2.world");
-            int x = config.getInt("worlds.surv2.x");
-            int y = config.getInt("worlds.surv2.y");
-            int z = config.getInt("worlds.surv2.z");
+            String world = plugin.getConfig().getString("worlds.surv2.world");
+            int x = plugin.getConfig().getInt("worlds.surv2.x");
+            int y = plugin.getConfig().getInt("worlds.surv2.y");
+            int z = plugin.getConfig().getInt("worlds.surv2.z");
             Location loc_surv2 = new Location(Bukkit.getServer().getWorld(world), x, y, z);
             loc.put("surv2", loc_surv2);
             getLogger().info("[surv2 불러오기 : " + loc_surv2 + "]");
@@ -275,14 +272,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.surv3").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.surv3").getKeys(false).isEmpty()) {
             getLogger().info("[surv3 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[surv3 불러오기 시작]");
-            String world = config.getString("worlds.surv3.world");
-            int x = config.getInt("worlds.surv3.x");
-            int y = config.getInt("worlds.surv3.y");
-            int z = config.getInt("worlds.surv3.z");
+            String world = plugin.getConfig().getString("worlds.surv3.world");
+            int x = plugin.getConfig().getInt("worlds.surv3.x");
+            int y = plugin.getConfig().getInt("worlds.surv3.y");
+            int z = plugin.getConfig().getInt("worlds.surv3.z");
             Location loc_surv3 = new Location(Bukkit.getServer().getWorld(world), x, y, z);
             loc.put("surv3", loc_surv3);
             getLogger().info("[surv3 불러오기 : " + loc_surv3 + "]");
@@ -290,14 +287,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.casino").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.casino").getKeys(false).isEmpty()) {
             getLogger().info("[casino 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[casino 불러오기 시작]");
-            String world = config.getString("worlds.casino.world");
-            int x = config.getInt("worlds.casino.x");
-            int y = config.getInt("worlds.casino.y");
-            int z = config.getInt("worlds.casino.z");
+            String world = plugin.getConfig().getString("worlds.casino.world");
+            int x = plugin.getConfig().getInt("worlds.casino.x");
+            int y = plugin.getConfig().getInt("worlds.casino.y");
+            int z = plugin.getConfig().getInt("worlds.casino.z");
             Location loc_casino = new Location(Bukkit.getServer().getWorld(world), x, y, z);
             loc.put("casino", loc_casino);
             getLogger().info("[casino 불러오기 : " + loc_casino + "]");
@@ -305,14 +302,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.minigame1").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.minigame1").getKeys(false).isEmpty()) {
             getLogger().info("[minigame1 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[minigame1 불러오기 시작]");
-            String world = config.getString("worlds.minigame1.world");
-            int x = config.getInt("worlds.minigame1.x");
-            int y = config.getInt("worlds.minigame1.y");
-            int z = config.getInt("worlds.minigame1.z");
+            String world = plugin.getConfig().getString("worlds.minigame1.world");
+            int x = plugin.getConfig().getInt("worlds.minigame1.x");
+            int y = plugin.getConfig().getInt("worlds.minigame1.y");
+            int z = plugin.getConfig().getInt("worlds.minigame1.z");
             Location loc_minigame1 = new Location(Bukkit.getWorld(world), x, y, z);
             loc.put("minigame1", loc_minigame1);
             getLogger().info("[minigame1 불러오기 : " + loc_minigame1 + "]");
@@ -320,14 +317,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.zw").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.zw").getKeys(false).isEmpty()) {
             getLogger().info("[zw 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[zw 불러오기 시작]");
-            String world = config.get("worlds.zw.world").toString();
-            int x = Integer.parseInt(config.get("worlds.zw.x").toString());
-            int y = Integer.parseInt(config.get("worlds.zw.y").toString());
-            int z = Integer.parseInt(config.get("worlds.zw.z").toString());
+            String world = plugin.getConfig().get("worlds.zw.world").toString();
+            int x = Integer.parseInt(plugin.getConfig().get("worlds.zw.x").toString());
+            int y = Integer.parseInt(plugin.getConfig().get("worlds.zw.y").toString());
+            int z = Integer.parseInt(plugin.getConfig().get("worlds.zw.z").toString());
             Location loc_zw = new Location(Bukkit.getServer().getWorld(world), x, y, z);
             loc.put("zw", loc_zw);
             getLogger().info("[zw 불러오기 : " + loc_zw + "]");
@@ -335,14 +332,14 @@ public class Functions {
         }
 
 
-        if (config.getConfigurationSection("worlds.zb").getKeys(false).isEmpty()) {
+        if (plugin.getConfig().getConfigurationSection("worlds.zb").getKeys(false).isEmpty()) {
             getLogger().info("[zb 불러오기중, 경로에 값이 존재하지 않습니다]");
         } else {
             getLogger().info("[zb 불러오기 시작]");
-            String world = config.get("worlds.zb.world").toString();
-            int x = Integer.parseInt(config.get("worlds.zb.x").toString());
-            int y = Integer.parseInt(config.get("worlds.zb.y").toString());
-            int z = Integer.parseInt(config.get("worlds.zb.z").toString());
+            String world = plugin.getConfig().get("worlds.zb.world").toString();
+            int x = Integer.parseInt(plugin.getConfig().get("worlds.zb.x").toString());
+            int y = Integer.parseInt(plugin.getConfig().get("worlds.zb.y").toString());
+            int z = Integer.parseInt(plugin.getConfig().get("worlds.zb.z").toString());
             Location loc_zb = new Location(Bukkit.getServer().getWorld(world), x, y, z);
             loc.put("zb", loc_zb);
             getLogger().info("[zb 불러오기 : " + loc_zb + "]");

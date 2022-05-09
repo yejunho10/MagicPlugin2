@@ -14,14 +14,14 @@ import yejunho10.magicplugin.etc.tpaData;
 import static yejunho10.magicplugin.GUIPlugin.tpaMap;
 
 @SuppressWarnings("all")
-public class tpahere implements CommandExecutor {
+public class TPAsk implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "명령어는 플레이어만 사용 가능합니다.");
             return false;
         }
-        Player p= (Player) sender;
+        Player p = (Player) sender;
 
         if (args.length > 1) {
             sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
@@ -53,7 +53,7 @@ public class tpahere implements CommandExecutor {
             return false;
         }
 
-        tpaData tpadata = new tpaData(target, p, p.getLocation());
+        tpaData tpadata = new tpaData(p, target, target.getLocation());
 
         tpaMap.put(target, tpadata);
 
@@ -83,3 +83,15 @@ public class tpahere implements CommandExecutor {
         return false;
     }
 }
+
+/*
+new BukkitRunnable() {
+    @Override
+        public void run() {
+            코드 내용!
+        }
+}.runTaskLaterAsynchronously(GUIPlugin.getInstance(), 20 * 15);
+= 15초후에 실행한다.
+
+-> Asynchronously = 비동기 였나 <-
+*/

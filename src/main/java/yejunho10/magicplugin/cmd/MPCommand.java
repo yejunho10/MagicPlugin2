@@ -43,7 +43,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args.length > 1) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
 
@@ -94,7 +94,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                 }
 
             if (args.length > 2) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
             }
             switch (args[1]) {
                 case "survival1" -> Teleport.teleportSurvival1(p);
@@ -124,7 +124,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
         } //mp tp <위치> [플레이어(zb만 해당)]
         else if (args[0].equalsIgnoreCase("lobby")) {
             if (args.length > 1) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
 
@@ -149,7 +149,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args.length > 2) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
             else if (args.length < 2) {
@@ -173,7 +173,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             else {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 잘못되었습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 잘못되었습니다.");
                 return false;
             }
         } //mp reload <server|config>
@@ -184,7 +184,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args.length > 1) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
 
@@ -208,7 +208,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args.length < 1) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
 
@@ -225,7 +225,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args.length < 2) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
             else if (args.length > 2) {
@@ -254,13 +254,13 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             else {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "올바른 아규먼트가 아닙니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "올바른 입력 값이 아닙니다.");
                 return false;
             }
         } //mp terror <on|off>
         else if (args[0].equalsIgnoreCase("help")) {
             if (args.length > 1) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
 

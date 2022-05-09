@@ -21,7 +21,7 @@ public class Ticket implements CommandExecutor, TabCompleter {
         } //tk
         else if (args[0].equalsIgnoreCase("add")) {
             if (args.length > 3) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
             else if (args.length < 3) {
@@ -48,7 +48,7 @@ public class Ticket implements CommandExecutor, TabCompleter {
         } //tk add <플레이어> <수량>
         else if (args[0].equalsIgnoreCase("set")) {
             if (args.length > 3) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
             else if (args.length < 3) {
@@ -75,7 +75,7 @@ public class Ticket implements CommandExecutor, TabCompleter {
         } //tk set <플레이어> <수량>
         else if (args[0].equalsIgnoreCase("remove")) {
             if (args.length > 3) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
             else if (args.length < 3) {
@@ -106,7 +106,7 @@ public class Ticket implements CommandExecutor, TabCompleter {
         } //tk remove <플레이어> <수량>
         else if (args[0].equalsIgnoreCase("clear")) {
             if (args.length > 2) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
             else if (args.length < 2) {
@@ -132,7 +132,7 @@ public class Ticket implements CommandExecutor, TabCompleter {
         } //tk clear <플레이어>
         else if (args[0].equalsIgnoreCase("value")) {
             if (args.length > 1) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
 
@@ -153,7 +153,7 @@ public class Ticket implements CommandExecutor, TabCompleter {
             Player p = (Player) sender;
 
             if (args.length < 3) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
             else if (args.length > 3) {
@@ -177,7 +177,7 @@ public class Ticket implements CommandExecutor, TabCompleter {
         } //tk gift <플레이어> <수량>
         else if (args[0].equalsIgnoreCase("buy")) {
             if (args.length > 3) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
             else if (args.length < 3) {
@@ -238,7 +238,7 @@ public class Ticket implements CommandExecutor, TabCompleter {
         } //tk buy <수단> <수량>
         else if (args[0].equalsIgnoreCase("help")) {
             if (args.length > 1) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아규먼트가 많습니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
                 return false;
             }
 
