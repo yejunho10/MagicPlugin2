@@ -31,8 +31,6 @@ commands:
     description: 허기를 회복합니다.
   tpask:
     description: 해당 플레이어에게 tp를 요청합니다.
-  tpahere:
-    description: 해당 플레이어에게 이곳으로 tp를 요청합니다.
   tpaccept:
     description: tp 요청을 수락합니다.
   tpadeny:

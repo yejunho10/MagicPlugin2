@@ -64,7 +64,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args.length < 2) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아큐먼트가 부족합니다.");
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 부족합니다.");
                     return false;
                 }
 
@@ -153,7 +153,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                 return false;
             }
             else if (args.length < 2) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아큐먼트가 부족합니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 부족합니다.");
                 return false;
             }
 
@@ -229,7 +229,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                 return false;
             }
             else if (args.length > 2) {
-                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "아큐먼트가 부족합니다.");
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 부족합니다.");
                 return false;
             }
 

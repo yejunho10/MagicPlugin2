@@ -16,7 +16,6 @@ import yejunho10.magicplugin.party.PartyCommand;
 import yejunho10.magicplugin.party.PartyPlayer;
 import yejunho10.magicplugin.tpa.TPAccept;
 import yejunho10.magicplugin.tpa.TPADeny;
-import yejunho10.magicplugin.tpa.TPAHere;
 import yejunho10.magicplugin.tpa.TPAsk;
 import yejunho10.magicplugin.etc.tpaData;
 
@@ -52,7 +51,6 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
         getCommand("party").setExecutor(new PartyCommand());
 
         getCommand("tpask").setExecutor(new TPAsk());
-        getCommand("tpahere").setExecutor(new TPAHere());
         getCommand("tpaccept").setExecutor(new TPAccept());
         getCommand("tpadeny").setExecutor(new TPADeny());
 
@@ -104,32 +102,39 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
             return true;
         }
         else if (label.equalsIgnoreCase("heal")) {
-                if (!sender.isOp()) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "이 기능은 OP 권한만 사용가능합니다.");
+            if (!sender.isOp()) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "이 기능은 OP 권한만 사용가능합니다.");
+                return false;
+            }
+
+            if (args.length == 1) {
+                Player target = Bukkit.getPlayer(args[0]);
+                if (target == null) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "존재하지 않는 플레이어입니다.");
+                    return false;
+                }
+                if (target.isOnline()) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "온라인 상태인 플레이어만 사용가능합니다.");
                     return false;
                 }
 
-                if (args.length > 1) {
-                    if (Bukkit.getOfflinePlayer(args[0]).isOnline()) {
-                        sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "온라인 상태인 플레이어만 사용가능합니다.");
-                        return false;
-                    }
-                    Player p = Bukkit.getPlayer(args[0]);
+                target.setHealth(target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+                target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + sender.getName() + ChatColor.LIGHT_PURPLE + "님에 의하여 체력이 회복되었습니다.");
+                return true;
+            }
+            else if (args.length > 1) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+            }
 
-                    p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-                    p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + sender.getName() + ChatColor.LIGHT_PURPLE + "님에 의하여 체력이 회복되었습니다.");
-                    return true;
-                }
-
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "명령어는 플레이어만 사용 가능합니다.");
-                    return false;
-                } //콘솔등에서 입력시
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "명령어는 플레이어만 사용 가능합니다.");
+                return false;
+            } //콘솔등에서 입력시
             Player p = (Player) sender;
 
-                p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "체력이 회복되었습니다.");
-                return true;
+            p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+            p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "체력이 회복되었습니다.");
+            return true;
         }
         else if (label.equalsIgnoreCase("feed")) {
             if (!sender.isOp()) {
@@ -137,16 +142,23 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
                 return false;
             }
 
-            if (args.length > 1) {
-                if (!Bukkit.getOfflinePlayer(args[0]).isOnline()) {
+            if (args.length == 1) {
+                Player target = Bukkit.getPlayer(args[0]);
+                if (target == null) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "존재하지 않는 플레이어입니다.");
+                    return false;
+                }
+                if (!target.isOnline()) {
                     sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "온라인 상태인 플레이어만 사용가능합니다.");
                     return false;
                 }
-                Player p = Bukkit.getPlayer(args[0]);
 
-                p.setFoodLevel(20);
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + sender.getName() + ChatColor.LIGHT_PURPLE + "님에 의하여 배고픔이 회복되었습니다.");
+                target.setFoodLevel(20);
+                target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + sender.getName() + ChatColor.LIGHT_PURPLE + "님에 의하여 배고픔이 회복되었습니다.");
                 return true;
+            }
+            else if (args.length > 1) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
             }
 
             if (!(sender instanceof Player)) {

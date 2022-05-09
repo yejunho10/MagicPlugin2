@@ -17,7 +17,7 @@ import static yejunho10.magicplugin.GUIPlugin.tpaMap;
 public class TPAsk implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "명령어는 플레이어만 사용 가능합니다.");
             return false;
         }
@@ -68,16 +68,16 @@ public class TPAsk implements CommandExecutor {
         }.runTaskLaterAsynchronously(GUIPlugin.getInstance(), 20 * 15);
 
         p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + target.getName() + "님에게 텔레포트를 요청했습니다.");
-        p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + p.getName() + "님이 이곳으로 텔레포트를 요청했습니다.");
+        target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + p.getName() + "님이 이곳으로 텔레포트를 요청했습니다.");
         target.sendMessage("요청을 수락하려면 /tpaccept를, 요청을 거절하려면 /tpadeny를 사용해주세요.");
         target.sendMessage("15초 뒤에 신청이 초기화됩니다.");
 
         //임시다!
         tpaData a = tpaMap.get(target);
-        p.sendMessage("요청자 : " + a.getSender() +
+        p.sendMessage("요청자 : " + a.getSender().getName() +
                 "\n타겟 : " + a.getTarget().getName() +
                 "\n위치 : " + a.getLocation().getWorld().getName() + ", " + a.getLocation().getX() + ", " + a.getLocation().getY() + ", " + a.getLocation().getZ());
-        target.sendMessage("요청자 : " + a.getSender() +
+        target.sendMessage("요청자 : " + a.getSender().getName() +
                 "\n타겟 : " + a.getTarget().getName() +
                 "\n위치 : " + a.getLocation().getWorld().getName() + ", " + a.getLocation().getX() + ", " + a.getLocation().getY() + ", " + a.getLocation().getZ());
         return false;
