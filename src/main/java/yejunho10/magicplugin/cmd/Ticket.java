@@ -259,21 +259,15 @@ public class Ticket implements CommandExecutor, TabCompleter {
     }
 
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length == 0) {
-            return sender.isOp() ? Arrays.asList("add", "set", "remove", "clear", "value", "gift", "buy", "help") : Arrays.asList("value", "gift", "buy", "help");
-        }
-        else {
-            if (args[0].equalsIgnoreCase("buy")) {
-                if (Integer.parseInt(args[1]) > 0 && Integer.parseInt(args[1]) < 8) {
-                    return List.of("");
-                } else {
-                    return Arrays.asList("1", "2", "3", "4", "5", "6", "7");
-                }
-            }
-            else if (args[0].equalsIgnoreCase("value") || args[0].equalsIgnoreCase("help")) {
+        if (args[0].equalsIgnoreCase("buy")) {
+            if (Integer.parseInt(args[1]) > 0 && Integer.parseInt(args[1]) < 8) {
                 return List.of("");
+            } else {
+                return Arrays.asList("1", "2", "3", "4", "5", "6", "7");
             }
+        } else if (args[0].equalsIgnoreCase("value") || args[0].equalsIgnoreCase("help")) {
+            return List.of("");
         }
-        return null;
+        return sender.isOp() ? Arrays.asList("add", "set", "remove", "clear", "value", "gift", "buy", "help") : Arrays.asList("value", "gift", "buy", "help");
     }
 }
