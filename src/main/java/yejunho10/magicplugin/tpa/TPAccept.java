@@ -32,8 +32,8 @@ public class TPAccept implements CommandExecutor {
         Player sendPlayer = tpaMap.get(p).getSender();
         Player recievePlayer = tpaMap.get(p).getTarget();
 
-        p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "초대를 수락하였습니다.");
-        sendPlayer.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + recievePlayer.getName() + "님이 초대를 수락하였습니다.");
+        p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "요청을 수락하였습니다.");
+        sendPlayer.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + recievePlayer.getName() + "님이 요청을 수락하였습니다.");
 
         Location loc = tpaMap.get(p).getLocation();
 

@@ -31,11 +31,9 @@ public class Event implements Listener {
         Player p = e.getPlayer();
 
         if (terror) {
-            if (!p.isOp()) {
-                p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드 활성화중이므로 블럭을 파괴할 수 없습니다.");
-                p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 1, 1);
-                e.setCancelled(true);
-            }
+            p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드 활성화중이므로 블럭을 파괴할 수 없습니다! 이용에 불편을 드려 죄송합니다.");
+            p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 1, 1);
+            e.setCancelled(true);
         } else if (p.getWorld() == getWorld("world") || p.getWorld() == getWorld("co_01") || p.getWorld() == getWorld("casino") || p.getWorld() == getWorld("minigame1")) {
             if (!p.isOp()) {
                 p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "해당 월드에서는 블럭 파괴가 불가능합니다! 이용에 불편을 드려 죄송합니다.");
@@ -50,11 +48,9 @@ public class Event implements Listener {
         Player p = e.getPlayer();
 
         if (terror) {
-            if (!p.isOp()) {
-                p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드 활성화중이므로 블럭을 설치할 수 없습니다! 이용에 불편을 드려 죄송합니다.");
-                p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 1, 1);
-                e.setCancelled(true);
-            }
+            p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드 활성화중이므로 블럭을 설치할 수 없습니다! 이용에 불편을 드려 죄송합니다.");
+            p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 1, 1);
+            e.setCancelled(true);
         } else if (p.getWorld() == getWorld("world") || p.getWorld() == getWorld("co_01") || p.getWorld() == getWorld("casino") || p.getWorld() == getWorld("minigame1")) {
             if (!p.isOp()) {
                 p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "해당 월드에서는 블럭 설치가 불가능합니다!");
@@ -69,10 +65,8 @@ public class Event implements Listener {
         Player p = e.getPlayer();
 
         if (terror) {
-            if (!p.isOp()) {
-                p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드 활성화중이므로 움직일 수 없습니다! 이용에 불편을 드려 죄송합니다.");
-                e.setCancelled(true);
-            }
+            p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "테러 대응모드 활성화중이므로 움직일 수 없습니다! 이용에 불편을 드려 죄송합니다.");
+            e.setCancelled(true);
         }
     }
 
@@ -90,7 +84,7 @@ public class Event implements Listener {
 
         if (!(ticket.containsKey(e.getPlayer().getUniqueId()))) {
             ticket.put(e.getPlayer().getUniqueId(), 0);
-            Bukkit.getLogger().info("[서버 최초 접속으로, 플레이어 기초 티켓 값 저장]");
+            Bukkit.getLogger().info("[플레이어 기초 티켓 값 저장]");
         }
     }
 
@@ -102,7 +96,7 @@ public class Event implements Listener {
     @EventHandler
     private void onPlayerChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
-        if (p.getName().equals("yejunho10")) {
+        if (p.getName().equals("yejunho10") || p.getName().equals("ikevin0920")) {
             e.setFormat(ChatColor.WHITE + "[" + ChatColor.BLUE + "MASTER" + ChatColor.WHITE + " - " + ChatColor.AQUA + e.getPlayer().getName() + ChatColor.WHITE + "] " + e.getMessage());
         } else if (p.getName().equals("KRHSJ")) {
             e.setFormat(ChatColor.WHITE + "[" + ChatColor.YELLOW + "STAFF" + ChatColor.WHITE + " - " + ChatColor.AQUA + e.getPlayer().getName() + ChatColor.WHITE + "] " + e.getMessage());

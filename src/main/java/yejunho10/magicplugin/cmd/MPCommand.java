@@ -105,7 +105,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
                 case "casino" -> Teleport.teleportCasino(p);
                 case "minigame1" -> Teleport.teleportMinigame1(p);
                 case "zw" -> {
-                    if (p.isOp()) {
+                    if (!p.isOp()) {
                         no_ops(p);
                         return false;
                     }

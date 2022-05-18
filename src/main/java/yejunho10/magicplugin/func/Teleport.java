@@ -95,19 +95,7 @@ public class Teleport {
 
     public static void teleportMinigame1(Player p) {
         if (p.hasPermission("myplugin.teleport.minigame1")) {
-            if (p.getWorld() == Bukkit.getWorld("surv1")) {
-                UUID playerUUID = p.getUniqueId();
-                Location survivalLocation = p.getLocation();
-                map1.put(playerUUID, survivalLocation);
-            } else if (p.getWorld() == Bukkit.getWorld("surv2")) {
-                UUID playerUUID = p.getUniqueId();
-                Location survivalLocation = p.getLocation();
-                map2.put(playerUUID, survivalLocation);
-            } else if (p.getWorld() == Bukkit.getWorld("surv3")) {
-                UUID playerUUID = p.getUniqueId();
-                Location survivalLocation = p.getLocation();
-                map3.put(playerUUID, survivalLocation);
-            }
+
 
             Location Dest_Minigame1 = new Location(loc.get("minigame1").getWorld(), loc.get("minigame1").getX(), loc.get("minigame1").getY(), loc.get("minigame1").getZ()); //미니게임1
             p.teleport(Dest_Minigame1);

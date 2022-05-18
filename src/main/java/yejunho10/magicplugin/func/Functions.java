@@ -25,7 +25,7 @@ public class Functions {
                 case 1 -> Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.GREEN + "!" + ChatColor.YELLOW + "] " + ChatColor.LIGHT_PURPLE + "핵, 엑스레이는 불법입니다.");
                 case 2 -> Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.GREEN + "!" + ChatColor.YELLOW + "] " + ChatColor.LIGHT_PURPLE + "디스코드 서버에 들어와주세요. http://discord.feathers.kro.kr");
                 case 3 -> Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.GREEN + "!" + ChatColor.YELLOW + "] " + ChatColor.LIGHT_PURPLE + "우리 서버를 추천해주세요. http://minelist.feathers.kro.kr");
-                case 4 -> Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.GREEN + "!" + ChatColor.YELLOW + "] " + ChatColor.LIGHT_PURPLE + "도메인이 mc.feather-s.kr로 변경되었습니다. 기존 도메인은 4/30에 지원 종료됩니다.");
+                case 4 -> Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.GREEN + "!" + ChatColor.YELLOW + "] " + ChatColor.LIGHT_PURPLE + "저희 서버에 대해 문의하려면 디스코드에서 문의해주세요.");
                 case 5 -> Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.GREEN + "!" + ChatColor.YELLOW + "] " + ChatColor.LIGHT_PURPLE + "스태프를 모집합니다. http://forms.feathers.kro.kr");
                 case 6 -> Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.GREEN + "!" + ChatColor.YELLOW + "] " + ChatColor.LIGHT_PURPLE + "후원을 해주시면 각종 특권을 드립니다. http://thanks.feathers.kro.kr");
             }

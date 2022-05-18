@@ -36,6 +36,11 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
 
         switch (args[0]) {
             case "create":
+                if (args.length > 1) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                    return false;
+                }
+
                 if (pp.hasParty()) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "이미 가입된 파티가 있습니다. /party leave를 사용하세요.");
                     return false;
@@ -43,9 +48,14 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
 
                 party = new Party(p);
                 pp.joinParty(party.getId());
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "파티를 생성하였습니다.");
+                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "파티를 생성하였습니다.");
                 break;
             case "list":
+                if (args.length > 1) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                    return false;
+                }
+
                 if (!pp.hasParty()) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "가입된 파티가 없습니다.");
                     return false;
@@ -57,6 +67,11 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 }
                 break;
             case "remove":
+                if (args.length > 1) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                    return false;
+                }
+
                 if (!pp.hasParty()) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "가입된 파티가 없습니다.");
                     return false;
@@ -67,14 +82,19 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                     return false;
                 } //파티장만 파티를 삭제할수 있음
 
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "파티를 삭제하였습니다.");
+                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "파티를 삭제하였습니다.");
                 for (Player partyPlayer : party.getPlayers()) {
                     PartyPlayer.getPartyPlayer(partyPlayer).leaveParty();
-                    partyPlayer.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "파티가 삭제되어, 탈퇴 되었습니다.");
+                    partyPlayer.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "파티가 삭제되어, 탈퇴 되었습니다.");
                 }
                 party.removeParty();
                 break;
             case "leave":
+                if (args.length > 1) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                    return false;
+                }
+
                 if (!pp.hasParty()) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "가입된 파티가 없습니다.");
                     return false;
@@ -86,22 +106,23 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 } //파티장은 파티를 떠날수 없음
 
                 party.removePlayer(p);
-                party.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + p.getName() + "님이 파티를 떠났습니다.");
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "파티를 떠났습니다.");
+                party.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + p.getName() + "님이 파티를 떠났습니다.");
+                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "파티를 떠났습니다.");
                 break;
             case "invite":
-                if (args.length < 2) {
+                if (args.length > 2) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                    return false;
+                }
+                else if (args.length < 2) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "초대할 플레이어를 입력해주세요.");
                 } //초대할 플레이어 입력 X
+
                 if (!pp.hasParty()) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "가입된 파티가 없습니다.");
                     return false;
                 } //가입된 파티가 없음 (찐따)
                 party = Party.getParty(pp.getPartyId());
-                if (!party.isMaster(p)) {
-                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "파티장만 초대기능을 사용할수 있습니다.");
-                    return false;
-                } //파티장이 아니면 초대할 수 없음
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "초대할 플레이어가 존재하지 않습니다.");
@@ -121,8 +142,8 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                     return false;
                 } //자신을 초대할 수 없음
 
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + target.getName() + "님을 초대하였습니다.");
-                target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + p.getName() + "님이 파티에 초대되었습니다. 수락하려면 /party accept, 거절하려면 /party deny를 15초 이내에 사용해주세요.");
+                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + target.getName() + "님을 초대하였습니다.");
+                target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + p.getName() + "님이 파티에 초대되었습니다. 수락하려면 /party accept, 거절하려면 /party deny를 15초 이내에 사용해주세요.");
 
                 inviteMap.put(target.getName(), party.getId());
 
@@ -136,17 +157,22 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 }.runTaskLaterAsynchronously(GUIPlugin.getInstance(), 20 * 15);
                 break;
             case "kick":
+                if (args.length > 2) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                    return false;
+                }
                 if (args.length < 2) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "추방할 플레이어를 입력해주세요.");
                     return false;
                 } //추방할 플레이어 입력 X
+
                 if (!pp.hasParty()) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "가입된 파티가 없습니다.");
                     return false;
                 } //가입된 파티가 없음
                 party = Party.getParty(pp.getPartyId());
                 if (!party.isMaster(p)) {
-                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "파티장만 추방할수 있습니다.");
+                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "파티장만 이 기능을 사용할수 있습니다.");
                     return false;
                 } //파티장이 아님
                 target = Bukkit.getPlayer(args[1]);
@@ -161,6 +187,7 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 } //타겟이 이 파티에 속하지 않음
                 if (party.isMaster(target)) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "파티장은 추방할수 없습니다.");
+                    return false;
                 } //추방하려는 플레이어가 파티장임
                 if (target.getName() == p.getName()) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "자신을 추방할 수 없습니다.");
@@ -168,11 +195,16 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 } //자신을 추방하려고 함
 
                 party.removePlayer(target);
-                target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + p.getName() + "님은 파티에서 추방되었습니다.");
-                party.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + target.getName() + "님은 파티에서 추방되었습니다.");
+                target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + p.getName() + "님은 파티에서 추방되었습니다.");
+                party.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + target.getName() + "님은 파티에서 추방되었습니다.");
                 pptarget.leaveParty();
                 break;
             case "accept":
+                if (args.length > 1) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                    return false;
+                }
+
                 if (!inviteMap.containsKey(p.getName())) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "초대를 받은 기록이 없습니다.");
                     return false;
@@ -188,12 +220,17 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 } //존재하지 않는 파티에서 초대를 받음
 
                 party.addPlayer(p);
-                party.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + p.getName() + "님이 파티에 참여했습니다.");
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "초대를 수락했습니다.");
+                party.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + p.getName() + "님이 파티에 참여했습니다.");
+                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "초대를 수락했습니다.");
                 pp.joinParty(party.getId());
                 inviteMap.remove(p.getName());
                 break;
             case "deny":
+                if (args.length > 1) {
+                    sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                    return false;
+                }
+
                 if (!inviteMap.containsKey(p.getName())) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "초대를 받은 기록이 없습니다.");
                     return false;
@@ -204,28 +241,9 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                     return false;
                 } //존재하지 않는 파티에서 초대를 받음
 
-                party.getMasterPlayer().sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + p.getName() + "님이 초대를 거절했습니다.");
+                party.getMasterPlayer().sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + p.getName() + "님이 초대를 거절했습니다.");
                 inviteMap.remove(p.getName());
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "초대를 거절했습니다.");
-                break;
-            case "tp":
-                if (args.length < 2) {
-                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "텔레포트할 플레이어를 입력해주세요.");
-                    return false;
-                } //텔레포트할 플레이어 입력 X
-                target = Bukkit.getPlayer(args[1]);
-                if (target == null) {
-                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "텔레포트할 플레이어가 존재하지 않습니다.");
-                    return false;
-                } //타겟이 존재하지 않음/온라인이 아님
-                pptarget = PartyPlayer.getPartyPlayer(target);
-                if (!pptarget.hasParty() || pptarget.getPartyId() != pp.getPartyId()) {
-                    p.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "해당 플레이어는 이 파티에 속해있지 않습니다.");
-                    return false;
-                } //타겟이 이 파티에 속하지 않음
-
-                p.teleport(target.getLocation());
-                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "성공적으로 텔레포트 되었습니다!");
+                p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.WHITE + "초대를 거절했습니다.");
                 break;
             case "help":
                 p.sendMessage(ChatColor.YELLOW + "========== " + ChatColor.LIGHT_PURPLE + "/party 명령어 도움말" + ChatColor.YELLOW + " ==========");
@@ -244,15 +262,13 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 0) {
-            return inviteMap.containsKey(sender.getName()) ? Arrays.asList("create", "list", "remove", "leave", "invite", "kick", "accept", "deny") : Arrays.asList("create", "list", "remove", "leave", "invite", "kick");
-        }
-        else if (args[0].equalsIgnoreCase("invite") || args[0].equalsIgnoreCase("kick")) {
+        if (args[0].equalsIgnoreCase("invite") || args[0].equalsIgnoreCase("kick")) {
             return null;
-        } else if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("remove") ||
+        }
+        else if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("remove") ||
                 args[0].equalsIgnoreCase("leave") || args[0].equalsIgnoreCase("accept") || args[0].equalsIgnoreCase("deny")) {
             return List.of("");
         }
-        return null;
+        return inviteMap.containsKey(sender.getName()) ? Arrays.asList("create", "list", "remove", "leave", "invite", "kick", "accept", "deny") : Arrays.asList("create", "list", "remove", "leave", "invite", "kick");
     }
 }
