@@ -270,6 +270,34 @@ public class MPCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(ChatColor.YELLOW + "/mp lobby : 로비로 텔레포트합니다.");
             return true;
         } //mp help
+        else if (args[0].equalsIgnoreCase("gungame")) {
+            if (!sender.isOp()) {
+                no_ops((Player) sender);
+                return false;
+            }
+
+            if (args.length < 2) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 부족합니다.");
+                return false;
+            }
+            else if (args.length > 2) {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "입력 값이 많습니다.");
+                return false;
+            }
+
+            if (args[1].equalsIgnoreCase("on")) {
+                Bukkit.getWorld("mingiame2").getBlockAt(GUIPlugin.gungameEnable).setType(Material.REDSTONE_BLOCK);
+                Bukkit.broadcastMessage(ChatColor.RED + "### TNT건 게임이 켜졌습니다. ###");
+            }
+            else if (args[1].equalsIgnoreCase("off")) {
+                Bukkit.getWorld("mingiame2").getBlockAt(GUIPlugin.gungameEnable).setType(Material.AIR);
+                Bukkit.broadcastMessage(ChatColor.RED + "### TNT건 게임이 꺼졌습니다. ###");
+            }
+            else {
+                sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "올바른 입력 값이 아닙니다.");
+                return false;
+            }
+        }
         sender.sendMessage(ChatColor.RED + "[오류] - " + ChatColor.WHITE + "사용법이 잘못되었습니다. /mp help를 참고하세요.");
         return false;
     }
@@ -285,7 +313,7 @@ public class MPCommand implements CommandExecutor, TabCompleter {
         else if (args[0].equalsIgnoreCase("reload")) {
             return sender.isOp() ? Arrays.asList("server", "config") : List.of("");
         }
-        return sender.isOp() ? Arrays.asList("about", "tp", "lobby", "reload", "reset", "stop", "terror", "help") : Arrays.asList("about", "tp", "lobby", "help");
+        return sender.isOp() ? Arrays.asList("about", "tp", "lobby", "reload", "reset", "stop", "terror", "help", "gungame") : Arrays.asList("about", "tp", "lobby", "help");
     }
 
     private void resetMessage(Player p, GameMode gm) {

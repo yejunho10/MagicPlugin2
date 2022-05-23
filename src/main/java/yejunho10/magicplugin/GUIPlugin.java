@@ -2,6 +2,7 @@ package yejunho10.magicplugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,6 +37,8 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
     public static Map<Player, tpaData> tpaMap = new HashMap<>();
 
     Timer timerForAnnouncement = new Timer();
+
+    public static Location gungameEnable = new Location(Bukkit.getWorld("minigame2"), 82, -36, 130);
 
     @Override
     public void onEnable() {

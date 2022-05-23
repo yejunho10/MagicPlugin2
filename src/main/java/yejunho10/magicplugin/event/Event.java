@@ -14,6 +14,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import yejunho10.magicplugin.GUIPlugin;
 
 import java.util.Collections;
 import java.util.Random;
@@ -91,6 +92,10 @@ public class Event implements Listener {
     @EventHandler
     private void onQuit(PlayerQuitEvent e) {
         e.setQuitMessage(ChatColor.YELLOW + "[-]" + ChatColor.GREEN + e.getPlayer().getName() + "님이 서버에서 퇴장하셨습니다.");
+        if (Bukkit.getOnlinePlayers().size() == 0) {
+            Bukkit.getWorld("mingiame2").getBlockAt(GUIPlugin.gungameEnable).setType(Material.AIR);
+            Bukkit.broadcastMessage(ChatColor.RED + "### 남은플레이어가 없어 TNT건 게임이 꺼졌습니다. ###");
+        }
     }
 
     @EventHandler
